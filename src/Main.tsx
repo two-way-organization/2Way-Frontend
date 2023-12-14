@@ -6,6 +6,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RootStackParamList } from './pages/types';
 import { CompanyHomePage } from './pages/company/HomePage';
 import { ApplicantHomePage } from './pages/applicant/HomePage';
+import { ApplicantSetupPage } from './pages/applicant/SetupPage';
+import { ApplyFragment } from './pages/applicant/main/fragment/ApplyFragment';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -42,8 +44,22 @@ export const Main = () => {
         }}
       />
       <Stack.Screen
+        name={'ApplicantSetup'}
+        component={ApplicantSetupPage}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
         name={'ApplicantHome'}
         component={ApplicantHomePage}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name={'Apply'}
+        component={ApplyFragment}
         options={{
           headerShown: false,
         }}

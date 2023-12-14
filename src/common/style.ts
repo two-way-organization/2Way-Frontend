@@ -30,6 +30,9 @@ export const center: ViewStyle = {
 export const flex1: ViewStyle = {
   flex: 1,
 };
+export const flex2: ViewStyle = {
+  flex: 2,
+};
 
 export const p0: ViewStyle = {
   padding: 0,
@@ -96,6 +99,15 @@ export const justifyCenter: ViewStyle = {
 export const justifyEnd: ViewStyle = {
   justifyContent: 'flex-end',
 };
+export const justifyBetween: ViewStyle = {
+  justifyContent: 'space-between',
+};
+export const justifyAround: ViewStyle = {
+  justifyContent: 'space-around',
+};
+export const justifyEvenly: ViewStyle = {
+  justifyContent: 'space-evenly',
+};
 export const itemsStart: ViewStyle = {
   alignItems: 'flex-start',
 };
@@ -119,4 +131,12 @@ export const selfEnd: ViewStyle = {
 };
 export const selfStretch: ViewStyle = {
   alignSelf: 'stretch',
+};
+
+export const relative: ViewStyle = {
+  position: 'relative',
+};
+
+export const absolute: ViewStyle = {
+  position: 'absolute',
 };

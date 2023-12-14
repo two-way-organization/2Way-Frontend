@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
-import { Pressable, Text, TextProps, View } from 'react-native';
+import { Alert, Pressable, Text, TextProps, View } from 'react-native';
 import { Button, SegmentedButtons, TextInput } from 'react-native-paper';
 
 import { hFull, itemsCenter, itemsStretch, justifyCenter, justifyStart, row, selfStart, wFull } from '../common/style';
@@ -9,29 +9,44 @@ import { colors } from '../constants/theme';
 import { Spacer } from '../common/Spacer';
 import { StackActions, useNavigation } from '@react-navigation/native';
 import { Loader } from '../common/Loader';
-import { useAuthStore } from '../stores/auth';
+import { useAuth } from '../stores/auth';
+import { useMutation } from '@tanstack/react-query';
+import { login } from '../api/auth';
 
 export const LoginPage = () => {
   const navigation = useNavigation();
-  const store = useAuthStore();
+  const store = useAuth();
+  const isLogin = useAuth((it) => it.isLogin());
 
-  const [loading, setLoading] = useState(false);
+  const loginMutation = useMutation({
+    mutationFn: () => login(type as 'applicants' | 'companies', email, password),
+  })
+
   const [type, setType] = useState('applicants');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   useEffect(() => {
-    if (store.isLogin()) {
+    if (loginMutation.isError) {
+      Alert.alert('로그인에 실패했습니다.');
+    }
+  }, [loginMutation.isError]);
+  useEffect(() => {
+    if (loginMutation.isSuccess) {
+      store.setToken(loginMutation.data.token);
+    }
+  }, [loginMutation.isSuccess]);
+
+  useEffect(() => {
+    if (isLogin) {
       if (type === 'applicants') navigation.dispatch(StackActions.replace('ApplicantHome'));
       if (type === 'companies') navigation.dispatch(StackActions.replace('CompanyHome'))
     }
-  }, [store.isLogin()]);
+  }, [isLogin]);
 
-  const onSubmit = async () => {
-    setLoading(true);
-    await store.login(type as 'applicants' | 'companies', email, password);
-    setLoading(false);
-  };
+  const onSubmit = useCallback(async () => {
+    loginMutation.mutate();
+  }, []);
 
   return (
     <SafeAreaView style={[wFull, hFull, justifyStart, itemsCenter]}>
@@ -44,7 +59,7 @@ export const LoginPage = () => {
           </Text>
         </Text>
       </View>
-      <Loader loading={loading} />
+      <Loader loading={loginMutation.isPending} />
       <View style={[{ width: '80%' }, itemsStretch]}>
         <SegmentedButtons
           buttons={[

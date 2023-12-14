@@ -35,3 +35,5 @@ export interface ApplicantJob {
   startDate: string;
   title: string;
 }
+
+export type JobType = 'Regular' | 'Intern' | 'ConversionIntern' | 'Contract';

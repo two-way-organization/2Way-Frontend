@@ -3,7 +3,9 @@ export const colors = {
   secondary: '#FBBC05',
 
   primaryContainer: '#E6F0FF',
-  secondaryContainer: '#FFF7E6',
+  secondaryContainer: '#CCE3FF',
+
+  container: '#F4F4F4',
 
   black: '#000000',
   white: '#FFFFFF',
@@ -14,7 +16,7 @@ export const colors = {
 export const DEFAULT_THEME = {
   'colors': {
     'primary': colors.primary,
-    'onPrimary': colors.white,
+    'onPrimary': colors.container,
     'primaryContainer': colors.primaryContainer,
     'onPrimaryContainer': colors.black,
     'secondary': colors.secondary,
