@@ -60,7 +60,9 @@ export const ApplicantSetupDetailFragment = () => {
   useEffect(() => {
     if (resumeMutation.isSuccess) {
       queryClient.invalidateQueries({ queryKey: ['resumes'] }).then(() => {
-        navigation.navigate('ApplicantHome');
+        navigation.navigate('ApplicantHome', {
+          screen: 'Home',
+        });
       });
     }
 
